@@ -5,7 +5,9 @@
 package View;
 
 import Controller.Controller;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 
 /**
@@ -15,6 +17,9 @@ import javax.swing.JTextArea;
 public class RemoveSchedulePanel extends javax.swing.JPanel {
 
     Controller controller;
+    int day;
+    int month;
+    int year;
     /**
      * Creates new form RemoveSchedulePanel
      */
@@ -26,7 +31,10 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
         Controller.numberOnlySpinner(monthSpinner);
         Controller.numberOnlySpinner(yearSpinner);
         
-        mealList.setModel(null);
+        day = (int) daySpinner.getValue();
+        month = (int) monthSpinner.getValue();
+        year = (int) yearSpinner.getValue();
+        
         mealDetail.setEditable(false);
     }
 
@@ -35,7 +43,10 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
     public int getYear() { return (int) yearSpinner.getValue(); }
     public JTextArea getMealDetail() { return mealDetail; }
     public JList<String> getMealList() { return mealList; }
-    
+    public JLabel getWarningLabel() { return warningLabel; } 
+    public JSpinner getDaySpinner() { return daySpinner; } 
+    public JSpinner getMonthSpinner() { return monthSpinner; } 
+    public JSpinner getYearSpinner() { return yearSpinner; }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,6 +73,7 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
         removeScheduleButton = new javax.swing.JButton();
         removeRecipeButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
+        warningLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -69,6 +81,11 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
         removeScheduleLabel.setText("Remove Schedule");
 
         yearSpinner.setPreferredSize(new java.awt.Dimension(65, 22));
+        yearSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                yearSpinnerStateChanged(evt);
+            }
+        });
 
         dateLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         dateLabel.setText("Date");
@@ -77,15 +94,25 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
         mealLabel.setText("Meal");
 
         mealList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { " ", " ", " ", " ", " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        mealList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mealListMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(mealList);
 
         dayLabel.setText("Day:");
 
         daySpinner.setPreferredSize(new java.awt.Dimension(65, 22));
+        daySpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                daySpinnerStateChanged(evt);
+            }
+        });
 
         monthLabel.setText("Month:");
 
@@ -94,14 +121,36 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
         jScrollPane2.setViewportView(mealDetail);
 
         monthSpinner.setPreferredSize(new java.awt.Dimension(65, 22));
+        monthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                monthSpinnerStateChanged(evt);
+            }
+        });
 
         yearLabel.setText("Year:");
 
         removeScheduleButton.setText("Remove schedule");
+        removeScheduleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeScheduleButtonActionPerformed(evt);
+            }
+        });
 
         removeRecipeButton.setText("Remove recipe");
+        removeRecipeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeRecipeButtonActionPerformed(evt);
+            }
+        });
 
         refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
+
+        warningLabel.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -110,6 +159,7 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(warningLabel)
                     .addComponent(refreshButton)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(removeScheduleButton)
@@ -141,7 +191,7 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(removeScheduleLabel)
                 .addGap(18, 18, 18)
                 .addComponent(dateLabel)
@@ -161,13 +211,46 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(refreshButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(warningLabel)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeScheduleButton)
                     .addComponent(removeRecipeButton))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mealListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mealListMouseClicked
+        controller.setMealDetail(this.getClass().getSimpleName());  // TODO add your handling code here:
+    }//GEN-LAST:event_mealListMouseClicked
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        controller.refreshRemoveList();// TODO add your handling code here:
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
+    private void removeRecipeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeRecipeButtonActionPerformed
+        controller.removeScheduleMeal();// TODO add your handling code here:
+    }//GEN-LAST:event_removeRecipeButtonActionPerformed
+
+    private void removeScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeScheduleButtonActionPerformed
+        controller.removeSchedule();// TODO add your handling code here:
+    }//GEN-LAST:event_removeScheduleButtonActionPerformed
+
+    private void daySpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_daySpinnerStateChanged
+        day = (int) daySpinner.getValue();
+        controller.refreshRemoveListState(day, month, year);        // TODO add your handling code here:
+    }//GEN-LAST:event_daySpinnerStateChanged
+
+    private void monthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_monthSpinnerStateChanged
+        month = (int) monthSpinner.getValue();   
+        controller.refreshRemoveListState(day, month, year);     // TODO add your handling code here:
+    }//GEN-LAST:event_monthSpinnerStateChanged
+
+    private void yearSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_yearSpinnerStateChanged
+        year = (int) yearSpinner.getValue();
+        controller.refreshRemoveListState(day, month, year);        // TODO add your handling code here:
+    }//GEN-LAST:event_yearSpinnerStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -185,6 +268,7 @@ public class RemoveSchedulePanel extends javax.swing.JPanel {
     private javax.swing.JButton removeRecipeButton;
     private javax.swing.JButton removeScheduleButton;
     private javax.swing.JLabel removeScheduleLabel;
+    private javax.swing.JLabel warningLabel;
     private javax.swing.JLabel yearLabel;
     private javax.swing.JSpinner yearSpinner;
     // End of variables declaration//GEN-END:variables

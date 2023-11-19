@@ -3,10 +3,11 @@
  */
 
 package MealPlanJavaGUI;
-
+    
 import Application.Application;
-
+import View.*;
 import Controller.Controller;
+
 
 
 /**
@@ -19,5 +20,8 @@ public class MealPlanJavaGUI {
 //        Application app = new Application();
 //        app.menu();
         Controller userController = new Controller();
+//        LoginPanelq log = new LoginPanel(userController);
+//        log.setVisible(true);
+//        CreateRecipePanel c = new CreateRecipePanel(userController);
     }
 }

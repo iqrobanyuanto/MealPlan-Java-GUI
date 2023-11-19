@@ -72,6 +72,18 @@ public class UserNutrition extends Nutrition {
     public void caloriesDecrease(int cal){
         this.calories -= cal;
     }
+    
+    public void proteinDecrease(int pro){
+        this.protein -= pro;
+    }
+    
+    public void carboDecrease(int carb){
+        this.carbs -= carb;
+    }
+    
+    public void fatDecrease(int fat){
+        this.fat -= fat;
+    }
 
     public int getCal(){
         return this.calories;
@@ -88,6 +100,20 @@ public class UserNutrition extends Nutrition {
     public int getFat() {
         return this.fat;
     }
-    
-    
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    public void setProtein(int protein) {
+        this.protein = protein;
+    }
+
+    public void setCarbs(int carbs) {
+        this.carbs = carbs;
+    }
+
+    public void setFat(int fat) {
+        this.fat = fat;
+    }
 }

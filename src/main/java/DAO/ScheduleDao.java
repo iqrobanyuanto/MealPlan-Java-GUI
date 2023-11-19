@@ -6,6 +6,7 @@ package DAO;
 
 import Database.Database;
 import Meal.Meal;
+import Meal.Recipe;
 import Schedule.Schedule;
 import Schedule.ScheduleMeal;
 import java.sql.PreparedStatement;
@@ -78,15 +79,16 @@ public class ScheduleDao implements ScheduleDaoInterface{
     }
 
     @Override
-    public List<String> getScheduleMeal(String date) {
+    public List<String> getScheduleMeal(String userId, String date) {
         List<String> mealNames = new ArrayList<>();
 
         try {
             String query = "SELECT meal.meal_name FROM schedule " +
                            "JOIN meal ON schedule.meal_id = meal.meal_id " +
-                           "WHERE schedule.date = ?";
+                           "WHERE schedule.date = ? AND schedule.user_id = ?";
             PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setString(1, date);
+            statement.setString(2, userId);
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -104,6 +106,44 @@ public class ScheduleDao implements ScheduleDaoInterface{
         return mealNames;
     }
 
+    @Override
+    public List<Recipe> getScheduleRecipe(String userId, String date) {
+        List<Recipe> scheduleMeals = new ArrayList<>();
+
+        try {
+            String query = "SELECT m.meal_id, m.meal_name, m.ingredients, m.tools, m.steps, m.calories, m.proteins, m.carbohydrates, m.fats " +
+                           "FROM meal m " +
+                           "INNER JOIN schedule s ON m.meal_id = s.meal_id " +
+                           "WHERE s.user_id = ? AND s.date = ?";
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
+            statement.setString(1, userId);
+            statement.setString(2, date);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String mealId = resultSet.getString("meal_id");
+                String mealName = resultSet.getString("meal_name");
+                String ingredients = resultSet.getString("ingredients");
+                String tools = resultSet.getString("tools");
+                String steps = resultSet.getString("steps");
+                int calories = resultSet.getInt("calories");
+                int proteins = resultSet.getInt("proteins");
+                int carbohydrates = resultSet.getInt("carbohydrates");
+                int fats = resultSet.getInt("fats");
+
+                Recipe recipe = new Recipe(mealId, mealName, ingredients, tools, steps, calories, proteins, carbohydrates, fats);
+                scheduleMeals.add(recipe);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return scheduleMeals;
+    }
+    
     @Override
     public void updateScheduleMeal(String userId, String date, String mealName) {
         
@@ -125,13 +165,13 @@ public class ScheduleDao implements ScheduleDaoInterface{
     }
 
     @Override
-    public void deleteScheduleMeal(String userId, String date, String mealName) {
+    public void deleteScheduleMeal(String userId, String date, String mealId) {
         try {
-            String query = "DELETE FROM schedulemeal WHERE user_id = ? AND schedule_id = ? AND meal_id = ?";
+            String query = "DELETE FROM schedule WHERE user_id = ? AND date = ? AND meal_id = ? LIMIT 1";
             PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setString(1, userId);
             statement.setString(2, date);
-            statement.setString(3, mealName);
+            statement.setString(3, mealId);
 
             statement.executeUpdate();
 
@@ -141,4 +181,44 @@ public class ScheduleDao implements ScheduleDaoInterface{
         }
     }
     
+    public static boolean isExist(String date){
+        try {
+            String query = "SELECT schedule_id FROM schedule WHERE date = ?";
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
+            statement.setString(1, date);
+
+            ResultSet resultSet = statement.executeQuery();
+            boolean scheduleExists = resultSet.next();
+
+            resultSet.close();
+            statement.close();
+
+            return scheduleExists;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    
+    public static int getLatestScheduleId(){
+        String query = "SELECT schedule_id FROM schedule ORDER BY CAST(SUBSTRING(schedule_id, 5) AS UNSIGNED) DESC LIMIT 1";
+        int latestScheduleId = 0;
+
+        try (PreparedStatement statement = Database.getConnection().prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String mealId = resultSet.getString("schedule_id");
+                String numericPart = mealId.substring(4);
+                latestScheduleId = Integer.parseInt(numericPart);
+            }
+
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return latestScheduleId;
+    }
 }

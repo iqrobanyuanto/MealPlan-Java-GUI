@@ -16,7 +16,6 @@ View\MenuPanel$6.class
 View\LoginPanel$2.class
 DAO\MealDao.class
 View\RemoveRecipePanel$1.class
-View\MenuPanel$17.class
 DAO\MealDaoInterface.class
 Schedule\ScheduleList.class
 User\User$Gender.class
@@ -25,7 +24,6 @@ View\ChangePasswordPanel.class
 View\RegisterPanel$4.class
 MealPlanJavaGUI\MealPlanJavaGUI.class
 Meal\Meal.class
-Schedule\ScheduleMeal.class
 Controller\ApplicationController.class
 Schedule\Schedule.class
 View\MenuPanel$11.class
@@ -37,7 +35,6 @@ View\MenuPanel$13.class
 View\RemoveSchedulePanel$1.class
 Controller\Controller.class
 View\RemoveRecipePanel$2.class
-View\CreateSchedulePanel$2.class
 View\RemoveSchedulePanel.class
 View\MenuPanel$4.class
 Database\Database.class
@@ -47,6 +44,7 @@ View\MenuPanel$7.class
 View\LoginPanel.class
 View\CreateSchedulePanel.class
 User\User.class
+.netbeans_automatic_build
 View\MenuPanel$12.class
 View\CreateRecipePanel.class
 View\RegisterPanel$2.class
@@ -60,4 +58,3 @@ View\PopUpFrame.class
 View\MenuPanel$8.class
 Interface\Loginable.class
 View\CreateRecipePanel$1.class
-View\MenuPanel$16.class

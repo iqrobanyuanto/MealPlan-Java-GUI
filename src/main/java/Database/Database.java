@@ -15,7 +15,7 @@ public class Database {
         if (connection == null){
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys","root","password");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mealplan","root","");
                 
             } catch (ClassNotFoundException | SQLException e){
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE,null,e);

@@ -4,6 +4,7 @@
  */
 package Schedule;
 
+import DAO.*;
 import Meal.Recipe;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,25 @@ public class Schedule {
     private List<Recipe> recipes;
 
     public Schedule(String date) {
+        int lastScheduleId = ScheduleDao.getLatestScheduleId();
+        if(lastScheduleId < 100){
+            lastScheduleId = 100;
+        }
+        lastScheduleId++;
+        scheduleId = String.format("sche%03d", lastScheduleId);
+        
         this.date = date;
         recipes = new ArrayList<Recipe>();
     }
 
     public Schedule(String scheduleId, String date) {
+        int lastScheduleId = ScheduleDao.getLatestScheduleId();
+        if(lastScheduleId < 100){
+            lastScheduleId = 100;
+        }
+        lastScheduleId++;
+        scheduleId = String.format("sche%03d", lastScheduleId);
+        
         this.scheduleId = scheduleId;
         this.date = date;
     }

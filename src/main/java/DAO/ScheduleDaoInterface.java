@@ -5,6 +5,7 @@
 package DAO;
 
 import Meal.Meal;
+import Meal.Recipe;
 import Schedule.*;
 import User.User;
 import java.util.List;
@@ -16,8 +17,9 @@ import java.util.List;
 public interface ScheduleDaoInterface {
     public void createSchedule(String userId, Schedule schedule, String mealName);
     public List<String> getScheduleDate(String userId);
-    public List<String> getScheduleMeal(String date);
+    public List<String> getScheduleMeal(String userId, String date);
+    public List<Recipe> getScheduleRecipe(String userId, String date);
     public void updateScheduleMeal(String userId, String date, String mealName);
     public void deleteSchedule(String userId, String date);
-    public void deleteScheduleMeal(String userId, String date, String mealName);
+    public void deleteScheduleMeal(String userId, String date, String mealId);
 }

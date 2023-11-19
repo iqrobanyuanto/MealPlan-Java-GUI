@@ -16,6 +16,7 @@ public interface MealDaoInterface {
     public void createMeal(String userId, Recipe recipe);
     public Recipe getMeal(String userId, String mealName);
     public List<String> getMealName(String userId);
+    public List<String> getMealNameByNutrition(String userId, int caloriesW);
     public void updateMeal(String userId, Recipe recipe);
     public void deleteMeal(String userId, String recipeName);
 }

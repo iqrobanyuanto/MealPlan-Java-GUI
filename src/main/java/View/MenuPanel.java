@@ -43,6 +43,11 @@ public class MenuPanel extends javax.swing.JPanel {
         
         mealRecipeDetail.setEditable(false);
         mealScheduleDetail.setEditable(false);
+        
+        cal.setHorizontalAlignment(SwingConstants.RIGHT);
+        pro.setHorizontalAlignment(SwingConstants.RIGHT);
+        carbs.setHorizontalAlignment(SwingConstants.RIGHT);
+        fat.setHorizontalAlignment(SwingConstants.RIGHT);
     }
 
     public JLabel getWelcomeLabel() { return welcomeLabel; }
@@ -70,7 +75,9 @@ public class MenuPanel extends javax.swing.JPanel {
     public JTextArea getMealRecipeDetail() { return mealRecipeDetail; } 
     public JTextArea getMealScheduleDetail() { return mealScheduleDetail; } 
     public JList<String> getMealScheduleList() { return mealScheduleList; } 
-    public JList<String> getScheduleList() { return scheduleList; }
+    public JList<String> getScheduleList() { return scheduleList; } 
+    public JLabel getDateLabel() { return dateLabel; }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,6 +89,7 @@ public class MenuPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         genderGroup = new javax.swing.ButtonGroup();
+        jMenuItem1 = new javax.swing.JMenuItem();
         informationPanel = new javax.swing.JPanel();
         mealPlanLabel = new javax.swing.JLabel();
         welcomeLabel = new javax.swing.JLabel();
@@ -89,10 +97,12 @@ public class MenuPanel extends javax.swing.JPanel {
         carbs = new javax.swing.JLabel();
         calLabel = new javax.swing.JLabel();
         proLabel = new javax.swing.JLabel();
-        fatLabel = new javax.swing.JLabel();
         carLabel = new javax.swing.JLabel();
         pro = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
+        fatLabel = new javax.swing.JLabel();
         fat = new javax.swing.JLabel();
+        refreshButton = new javax.swing.JButton();
         menuPanel = new javax.swing.JPanel();
         menuLabel = new javax.swing.JLabel();
         profileMenuPanel = new javax.swing.JPanel();
@@ -147,12 +157,13 @@ public class MenuPanel extends javax.swing.JPanel {
         jScrollPane5 = new javax.swing.JScrollPane();
         mealRecipeDetail = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        searchField = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         mealRecipeList = new javax.swing.JList<>();
         createRecipeButton = new javax.swing.JButton();
         removeRecipeButton = new javax.swing.JButton();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setPreferredSize(new java.awt.Dimension(833, 612));
 
@@ -172,13 +183,22 @@ public class MenuPanel extends javax.swing.JPanel {
 
         proLabel.setText("Protein:");
 
-        fatLabel.setText("Fat:");
-
         carLabel.setText("Carbs:");
 
         pro.setText("0");
 
+        dateLabel.setText("dd-mm-yyyy");
+
+        fatLabel.setText("Fat:");
+
         fat.setText("0");
+
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout informationPanelLayout = new javax.swing.GroupLayout(informationPanel);
         informationPanel.setLayout(informationPanelLayout);
@@ -187,27 +207,37 @@ public class MenuPanel extends javax.swing.JPanel {
             .addGroup(informationPanelLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(welcomeLabel)
-                    .addComponent(mealPlanLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 539, Short.MAX_VALUE)
-                .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(calLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fatLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(proLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(carLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(informationPanelLayout.createSequentialGroup()
+                        .addComponent(welcomeLabel)
+                        .addGap(0, 535, Short.MAX_VALUE))
+                    .addGroup(informationPanelLayout.createSequentialGroup()
+                        .addComponent(mealPlanLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dateLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(refreshButton, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(18, 18, 18)
                 .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cal, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(carbs, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(calLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(proLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(carLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fatLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pro, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(cal, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(carbs, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(fat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         informationPanelLayout.setVerticalGroup(
             informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(informationPanelLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(mealPlanLabel)
+                .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mealPlanLabel)
+                    .addComponent(refreshButton))
                 .addGap(0, 0, 0)
                 .addComponent(welcomeLabel)
                 .addGap(13, 13, 13))
@@ -215,19 +245,20 @@ public class MenuPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(calLabel)
-                    .addComponent(cal))
+                    .addComponent(cal)
+                    .addComponent(dateLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(proLabel)
                     .addComponent(pro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fatLabel)
-                    .addComponent(fat))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(carLabel)
                     .addComponent(carbs))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fatLabel)
+                    .addComponent(fat))
                 .addContainerGap())
         );
 
@@ -370,7 +401,7 @@ public class MenuPanel extends javax.swing.JPanel {
         });
 
         scheduleList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { " ", " ", " ", " ", " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -385,7 +416,7 @@ public class MenuPanel extends javax.swing.JPanel {
         scheduleListLabel.setText("Schedule");
 
         mealScheduleList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { " ", " ", " ", " ", " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -664,10 +695,19 @@ public class MenuPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Search");
 
-        jButton5.setText("Search");
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
+        searchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchFieldKeyReleased(evt);
+            }
+        });
 
         mealRecipeList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { " ", " ", " ", " ", " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -706,13 +746,11 @@ public class MenuPanel extends javax.swing.JPanel {
                     .addComponent(recipeDetailLabel)
                     .addGroup(recipePanelLayout.createSequentialGroup()
                         .addGroup(recipePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                            .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(recipePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(83, Short.MAX_VALUE))
         );
         recipePanelLayout.setVerticalGroup(
@@ -727,14 +765,12 @@ public class MenuPanel extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel3)
                 .addGap(0, 0, 0)
-                .addGroup(recipePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(recipePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane5)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout detailPanelLayout = new javax.swing.GroupLayout(detailPanel);
@@ -845,6 +881,18 @@ public class MenuPanel extends javax.swing.JPanel {
         controller.setScheduleMealDetail();        // TODO add your handling code here:
     }//GEN-LAST:event_mealScheduleListMouseClicked
 
+    private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
+        controller.searchRecipe(searchField.getText());// TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldKeyReleased
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        controller.refreshInformation();        // TODO add your handling code here:
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addScheduleButton;
@@ -857,6 +905,7 @@ public class MenuPanel extends javax.swing.JPanel {
     private javax.swing.JLabel carbs;
     private javax.swing.JLabel cmLabel;
     private javax.swing.JButton createRecipeButton;
+    private javax.swing.JLabel dateLabel;
     private javax.swing.JPanel detailPanel;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JLabel emailLabelNoSet;
@@ -871,14 +920,13 @@ public class MenuPanel extends javax.swing.JPanel {
     private javax.swing.JLabel heightLabelNoSet;
     private javax.swing.JSpinner heightSpinner;
     private javax.swing.JPanel informationPanel;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel kgLabel;
     private javax.swing.JButton logoutButton;
     private javax.swing.JRadioButton maleRadio;
@@ -904,6 +952,7 @@ public class MenuPanel extends javax.swing.JPanel {
     private javax.swing.JPanel recipeMenuPanel;
     private javax.swing.JPanel recipePanel;
     private javax.swing.JLabel recipeTextLabel;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JButton removeRecipeButton;
     private javax.swing.JButton removeScheduleButton;
     private javax.swing.JButton saveButton;
@@ -913,6 +962,7 @@ public class MenuPanel extends javax.swing.JPanel {
     private javax.swing.JLabel scheduleMenuLabel;
     private javax.swing.JPanel scheduleMenuPanel;
     private javax.swing.JPanel schedulePanel;
+    private javax.swing.JTextField searchField;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JLabel usernameLabelNoSet;
     private javax.swing.JLabel weightLabel;

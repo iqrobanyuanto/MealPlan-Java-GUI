@@ -53,6 +53,8 @@ public class LoginPanel extends javax.swing.JPanel {
         loginLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginLabel.setText("Login");
 
+        passwordField.setText("12345678");
+
         passwordLabel.setText("Password");
 
         loginBtn.setText("Login");
@@ -71,6 +73,8 @@ public class LoginPanel extends javax.swing.JPanel {
                 registerNowBtnActionPerformed(evt);
             }
         });
+
+        usernameField.setText("alift");
 
         warningLabel.setForeground(new java.awt.Color(255, 0, 0));
 
@@ -96,7 +100,7 @@ public class LoginPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addComponent(loginLabel)
                 .addGap(18, 18, 18)
                 .addComponent(usernameLabel)
@@ -110,9 +114,9 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addComponent(warningLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(loginBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(registerNowBtn)
-                .addGap(30, 30, 30))
+                .addGap(80, 80, 80))
         );
     }// </editor-fold>//GEN-END:initComponents
 

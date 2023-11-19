@@ -132,6 +132,41 @@ public class MealDao implements MealDaoInterface{
     }
 
     @Override
+    public List<String> getMealNameByNutrition(String userId, int calories) {
+        List<String> mealNames = new ArrayList<>();
+
+        try {
+            String query;
+            PreparedStatement statement;
+
+            if (userId == null) {
+                query = "SELECT meal_name FROM meal WHERE user_id IS NULL AND calories < ?";
+                statement = Database.getConnection().prepareStatement(query);
+                statement.setInt(1, calories);
+            } else {
+                query = "SELECT meal_name FROM meal WHERE user_id = ? AND calories < ?";
+                statement = Database.getConnection().prepareStatement(query);
+                statement.setString(1, userId);
+                statement.setInt(2, calories);
+            }
+            
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String mealName = resultSet.getString("meal_name");
+                mealNames.add(mealName);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mealNames;
+    }
+
+    @Override
     public void updateMeal(String userId, Recipe recipe) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -162,7 +197,7 @@ public class MealDao implements MealDaoInterface{
     
     public static int getLatestMealId(){
         String query = "SELECT meal_id FROM meal ORDER BY CAST(SUBSTRING(meal_id, 5) AS UNSIGNED) DESC LIMIT 1";
-        int latestUserId = 0;
+        int latestMealId = 0;
 
         try (PreparedStatement statement = Database.getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -170,7 +205,7 @@ public class MealDao implements MealDaoInterface{
             if (resultSet.next()) {
                 String mealId = resultSet.getString("meal_id");
                 String numericPart = mealId.substring(4);
-                latestUserId = Integer.parseInt(numericPart);
+                latestMealId = Integer.parseInt(numericPart);
             }
 
             resultSet.close();
@@ -178,6 +213,6 @@ public class MealDao implements MealDaoInterface{
             e.printStackTrace();
         }
 
-        return latestUserId;
+        return latestMealId;
     }
 }

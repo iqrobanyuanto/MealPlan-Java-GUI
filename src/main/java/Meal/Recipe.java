@@ -31,6 +31,22 @@ public class Recipe {
         foodNutrition = new FoodNutrition();
     }
 
+    public Recipe(String mealId, String recipeName, String ingredientStr, String toolStr, String stepStr, int cal, int pro, int car, int fat) {
+        foodNutrition = new FoodNutrition();
+        
+        this.mealId = mealId;
+        this.recipeName = recipeName;
+        this.ingredientStr = ingredientStr;
+        this.toolStr = toolStr;
+        this.stepStr = stepStr;
+        setCalories(cal);
+        setProteins(pro);
+        setCarbohydrates(car);
+        setFats(fat);
+    }
+    
+    
+
     public Recipe(String recipeName, String ingredientStr, String toolStr, String stepStr, int cal, int pro, int car, int fat) {
         int lastMealId = MealDao.getLatestMealId();
         lastMealId++;

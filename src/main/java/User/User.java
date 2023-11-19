@@ -14,6 +14,8 @@ import Nutrition.UserNutrition;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -338,6 +340,7 @@ public class User implements Loginable{
             throw new IllegalArgumentException("Invalid gender: " + gender);
         }
     }
+    
     public void setUsername(String username) {
         this.username = username;
     }
@@ -369,7 +372,7 @@ public class User implements Loginable{
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    
+
     public String getGender() {
         return gender.toString();
     }
