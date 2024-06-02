@@ -12,6 +12,14 @@
         <exec.mainClass>MealPlanJavaGUI.MealPlanJavaGUI</exec.mainClass>
     </properties>
     
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub aliftf Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/aliftf/MealPlan-Java-GUI</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
