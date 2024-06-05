@@ -44,8 +44,8 @@ public class UserNutrition extends Nutrition {
     }
 
     private double proteinNeeded(User user){
-        double weight = (double) user.getWeight() * 2.20462;
-        return weight*2.2;
+        double weight = (double) user.getWeight() * 2.20462;//new comment
+        return weight*2.2;//new code here
     }
 
     private double fatNeeded(User user){
@@ -77,7 +77,7 @@ public class UserNutrition extends Nutrition {
         this.protein -= pro;
     }
     
-    public void carboDecrease(int carb){
+    public void carboDec(int carb){
         this.carbs -= carb;
     }
     

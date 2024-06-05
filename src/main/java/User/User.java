@@ -54,7 +54,7 @@ public class User implements Loginable{
     }
 
     public User(String name, String username, String email, String password, String gender, int age, int height, int weight) {
-        int lastUserId = UserDao.getLatestUserId();
+        int lastUserId = 9;
         lastUserId++;
         userId = String.format("user%03d", lastUserId);
         
