@@ -45,7 +45,7 @@ public class UserNutrition extends Nutrition {
 
     private double proteinNeeded(User user){
         double weight = (double) user.getWeight() * 2.20462;
-        return weight*2.2;
+        return weight*2.2;//new code here
     }
 
     private double fatNeeded(User user){
