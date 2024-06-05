@@ -5,7 +5,9 @@
     <artifactId>MealPlanJavaGUI</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-        <build>
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
