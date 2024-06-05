@@ -77,7 +77,7 @@ public class UserNutrition extends Nutrition {
         this.protein -= pro;
     }
     
-    public void carboDecrease(int carb){
+    public void carboDec(int carb){
         this.carbs -= carb;
     }
     
