@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>alift</groupId>
-    <artifactId>MealPlanJavaGUI</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>mealplanjavagui</artifactId>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
     <build>
         <plugins>
@@ -21,6 +21,14 @@
         <exec.mainClass>MealPlanJavaGUI.MealPlanJavaGUI</exec.mainClass>
     </properties>
     
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/aliftf/MealPlan-Java-GUI</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
