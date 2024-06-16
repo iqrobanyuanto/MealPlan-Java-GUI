@@ -33,6 +33,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+      # Code Analysis
     - name: Code Smell Analysis
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
