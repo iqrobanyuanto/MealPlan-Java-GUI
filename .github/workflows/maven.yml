@@ -10,9 +10,9 @@ name: Build Project
 
 on:
   push:
-    branches: ["main", "development", "staging", "continuous-inspection"]
+    branches: ["main", "development", "staging"]
   pull_request:
-    branches: ["main", "development", "staging", "continuous-inspection"]
+    branches: ["main", "development", "staging"]
 
 jobs:
   build:
