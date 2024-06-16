@@ -1,0 +1,21 @@
+name: Code Inspection
+
+on:
+  push:
+    branches: ["main", "development", "staging"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Code Smell Analysis
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn verify sonar:sonar -Dsonar.projectKey=mealplan-java-gui_MealPlan-Java-GUI-monoRepo -Dsonar.organization=mealplan-java-gui -Dsonar.host.url=https://sonarcloud.io
+
